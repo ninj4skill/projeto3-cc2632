@@ -3,6 +3,10 @@
 #include "contatos.h"
 
 void Adicionar(Contato contatos[], int *pos){
+  if(*pos >= total){
+    printf("Limite de contatos atingido\n");
+    return;
+  }
   printf("Nome: ");
   fgets(contatos[*pos].nome, 50, stdin);
   clearBuffer();
