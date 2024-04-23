@@ -20,6 +20,26 @@ void Adicionar(Contato contatos[], int *pos){
   
 }
 
+void Deletar(Contato contatos[], int *pos){
+  int telefonedel;
+  printf("Telefone do contato a ser deletado: ");
+  scanf("%d", &telefonedel);
+  for (int i = 0; i < *pos; i++) {
+    if (contatos[i].telefone == telefonedel) {
+        strcpy(contatos[i].nome, contatos[i + 1].nome);
+        strcpy(contatos[i].sobrenome, contatos[i + 1].sobrenome);
+        strcpy(contatos[i].email, contatos[i + 1].email);
+        contatos[i].telefone = contatos[i + 1].telefone;
+        
+      }
+    else{
+      printf("Contato nao encontrado\n");
+    }
+  }
+  *pos = *pos - 1;
+}
+
+
 void clearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);

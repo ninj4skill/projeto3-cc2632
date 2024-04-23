@@ -16,6 +16,9 @@ int main() {
     if (opcao == 1){
       Adicionar(contatos, &pos);
     }
+    if(opcao == 2){
+        Deletar(contatos,&pos);
+    }
   } while(opcao != 0);
   
 }
