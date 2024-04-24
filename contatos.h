@@ -7,6 +7,8 @@ typedef struct{
   int telefone;
 } Contato;
 
+typedef void (*funcao)(Contato[], int*);
+
 void Adicionar(Contato contatos[], int *pos);
 void Deletar(Contato contatos[], int *pos);
 void Listar(Contato contatos[], int *pos);

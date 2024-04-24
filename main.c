@@ -2,11 +2,13 @@
 #include "contatos.h"
 
 int main() {
+  //funcao funcionalidades[] = {Adicionar, Deletar, Listar, Salvar, Carregar};
   Contato contatos[total];
   int pos;
   int opcao;
   
   do{
+    printf("\t\tMENU\n");
     printf("1. Adicionar contato\n");
     printf("2. Deletar contato\n");
     printf("3. Listar contatos\n");
@@ -16,8 +18,11 @@ int main() {
     if (opcao == 1){
       Adicionar(contatos, &pos);
     }
-    if(opcao == 2){
-        Deletar(contatos,&pos);
+    else if (opcao == 2){
+      Deletar(contatos, &pos);
+    }
+    else if (opcao == 3){
+      Listar(contatos, &pos);
     }
   } while(opcao != 0);
   
