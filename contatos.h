@@ -4,14 +4,14 @@ typedef struct{
   char nome[50];
   char sobrenome[50];
   char email[50];
-  int telefone;
+  long telefone;
 } Contato;
+typedef enum{SUCESSO, MAXCONTATOS, SEMCONTATOS, NAOENCONTRADO, ABRIR, FECHAR, ESCREVER, LER}erro;
+typedef erro (*funcao)(Contato[], int*);
 
-typedef void (*funcao)(Contato[], int*);
-
-void Adicionar(Contato contatos[], int *pos);
-void Deletar(Contato contatos[], int *pos);
-void Listar(Contato contatos[], int *pos);
-void Salvar(Contato contatos[], int *pos);
-void Carregar(Contato contatos[], int *pos);
+erro Adicionar(Contato contatos[], int *pos);
+erro Deletar(Contato contatos[], int *pos);
+erro Listar(Contato contatos[], int *pos);
+erro Salvar(Contato contatos[], int *pos);
+erro Carregar(Contato contatos[], int *pos);
 void clearBuffer();
