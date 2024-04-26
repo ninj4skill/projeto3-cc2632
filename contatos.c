@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "contatos.h"
-void Adicionar(Contato contatos[], int *pos){
+erro Adicionar(Contato contatos[], int *pos){
   if(*pos >= total){
     printf("Limite de contatos atingido\n");
-    return;
+    return MAXCONTATOS;
   }
   printf("Nome: ");
   clearBuffer();
@@ -20,62 +20,101 @@ void Adicionar(Contato contatos[], int *pos){
   contatos[*pos].email[strcspn(contatos[*pos].email, "\n")] = '\0';
   
   printf("Telefone: ");
-  scanf("%d", &contatos[*pos].telefone);
+  scanf("%ld", &contatos[*pos].telefone);
   
   clearBuffer();
 
   *pos = *pos + 1;
+  return SUCESSO;
 }
 
-void Deletar(Contato contatos[], int *pos){
-  int telefonedel;
+erro Deletar(Contato contatos[], int *pos){
+  if(*pos == 0){
+    printf("Sem contatos para deletar\n");
+    return SEMCONTATOS;
+  }
+  long telefonedel;
   printf("Telefone do contato a ser deletado: ");
-  scanf("%d", &telefonedel);
+  scanf("%ld", &telefonedel);
+  int deletar = 0;
   for (int i = 0; i < *pos; i++) {
     if (contatos[i].telefone == telefonedel) {
-        strcpy(contatos[i].nome, contatos[i + 1].nome);
-        strcpy(contatos[i].sobrenome, contatos[i + 1].sobrenome);
-        strcpy(contatos[i].email, contatos[i + 1].email);
-        contatos[i].telefone = contatos[i + 1].telefone;
-        
+      strcpy(contatos[i].nome, contatos[i + 1].nome);
+      strcpy(contatos[i].sobrenome, contatos[i + 1].sobrenome);
+      strcpy(contatos[i].email, contatos[i + 1].email);
+      contatos[i].telefone = contatos[i + 1].telefone;
+      deletar = 1;
       }
-    else{
-      printf("Contato nao encontrado\n");
-    }
+  }
+  if (deletar == 0){
+    printf("Contato não encontrado\n");
+    return NAOENCONTRADO;
   }
   *pos = *pos - 1;
+  return SUCESSO;
 }
 
-void Listar(Contato contatos[], int *pos){
+erro Listar(Contato contatos[], int *pos){
+  if(*pos == 0){
+    printf("Sem contatos para listar\n");
+    return SEMCONTATOS;
+  }
   for (int i = 0; i < *pos; i++){
     printf("Nome: %s\t", contatos[i].nome);
     printf("Sobrenome: %s\t", contatos[i].sobrenome);
     printf("Email: %s\t", contatos[i].email);
-    printf("Telefone: %d\n", contatos[i].telefone);
+    printf("Telefone: %ld\n", contatos[i].telefone);
   }
+  return SUCESSO;
 }
 
-void Carregar(Contato contatos[], int *pos) {
-  FILE *f = fopen("contatos", "rb");
+erro Carregar(Contato contatos[], int *pos) {
+  FILE *f = fopen("contatos.bin", "rb");
   if (f == NULL){
-    return;
+    printf("Erro ao abrir arquivo.\n");
+    return ABRIR;
   }
-  int qtd = fread(contatos, total, sizeof(Contato), f);
-  qtd = fread(pos,1,sizeof(int),f);
-  fclose(f);
+  int carregar = fread(contatos, total, sizeof(Contato), f);
+  if(carregar == 0){
+    printf("Erro ao ler arquivo\n");
+    return LER;
+  }
+  carregar = fread(pos,1,sizeof(int),f);
+  if(carregar == 0){
+    printf("Erro ao ler arquivo\n");
+    return LER;
+  }
+  if(fclose(f)){
+    return FECHAR;
+  }
+  return SUCESSO;
 }
 
-void Salvar(Contato contatos[], int *pos) {
-  FILE *f = fopen("contatos", "wb");
+erro Salvar(Contato contatos[], int *pos) {
+  FILE *f = fopen("contatos.bin", "wb");
   if (f == NULL){
-    return;
+    printf("Erro ao abrir arquivo");
+    return ABRIR;
   }
-  int qtd = fwrite(contatos, total, sizeof(Contato), f);
-  qtd = fwrite(pos,1,sizeof(int),f);
-  fclose(f);
+  int salvar = fwrite(contatos, total, sizeof(Contato), f);
+  if(salvar == 0){
+    printf("Erro ao escrever no arquivo");
+    return ESCREVER;
+  }
+  salvar = fwrite(pos,1,sizeof(int),f);
+  if(salvar == 0){
+    printf("Erro ao escrever no arquivo");
+    return ESCREVER;
+  }
+  if(fclose(f)){
+    return FECHAR;
+  }
+  return SUCESSO;
 }
 
 void clearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
+
+
