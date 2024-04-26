@@ -13,9 +13,8 @@ void Adicionar(Contato contatos[], int *pos){
   
   printf("Sobrenome: ");
   fgets(contatos[*pos].sobrenome, 50, stdin);
-  contatos[*pos].sobrenome[strcspn(contatos[*pos].sobrenome, "\n")] = '\0';
+  contatos[*pos].sobrenome[strcspn(contatos[*pos].sobrenome,"\n")] = '\0';
   
-
   printf("Email: ");
   fgets(contatos[*pos].email, 50, stdin);
   contatos[*pos].email[strcspn(contatos[*pos].email, "\n")] = '\0';
@@ -26,9 +25,6 @@ void Adicionar(Contato contatos[], int *pos){
   clearBuffer();
 
   *pos = *pos + 1;
-
-  
-  
 }
 
 void Deletar(Contato contatos[], int *pos){
@@ -59,9 +55,27 @@ void Listar(Contato contatos[], int *pos){
   }
 }
 
+void Carregar(Contato contatos[], int *pos) {
+  FILE *f = fopen("contatos", "rb");
+  if (f == NULL){
+    return;
+  }
+  int qtd = fread(contatos, total, sizeof(Contato), f);
+  qtd = fread(pos,1,sizeof(int),f);
+  fclose(f);
+}
+
+void Salvar(Contato contatos[], int *pos) {
+  FILE *f = fopen("contatos", "wb");
+  if (f == NULL){
+    return;
+  }
+  int qtd = fwrite(contatos, total, sizeof(Contato), f);
+  qtd = fwrite(pos,1,sizeof(int),f);
+  fclose(f);
+}
+
 void clearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
-
-

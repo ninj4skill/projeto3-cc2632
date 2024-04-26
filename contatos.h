@@ -14,5 +14,4 @@ void Deletar(Contato contatos[], int *pos);
 void Listar(Contato contatos[], int *pos);
 void Salvar(Contato contatos[], int *pos);
 void Carregar(Contato contatos[], int *pos);
-
 void clearBuffer();
