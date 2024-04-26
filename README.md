@@ -22,9 +22,9 @@ Carregar contatos: Permite o suário carregar o arquivo contatos.bin para que os
 
 Para compilar e executar o cógigo no codespace é preciso:
 
-1 - Clonar o projeto para o seu computador usando git clone <URL-do-repositorio>
+1 - Clonar o projeto para o seu computador usando git clone + URL do repositorio
 
-2 - Navegar para o dietório usando cd <nome-do-repositorio>
+2 - Navegar para o dietório usando cd + nome do repositorio
 
 3 - Compilar o programa usando o compilador gcc
 
