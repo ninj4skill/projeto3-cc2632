@@ -6,6 +6,7 @@ int main() {
   Contato contatos[total];
   int pos;
   int opcao;
+  Carregar(contatos, &pos);
   
   do{
     printf("\t\tMENU\n");
@@ -23,6 +24,10 @@ int main() {
     }
     else if (opcao == 3){
       Listar(contatos, &pos);
+    }
+    else if (opcao == 0){
+      printf("Saindo...\n");
+      Salvar(contatos, &pos);
     }
   } while(opcao != 0);
   
