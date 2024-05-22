@@ -10,18 +10,38 @@ erro Adicionar(Contato contatos[], int *pos){
   clearBuffer();
   fgets(contatos[*pos].nome, sizeof(contatos[*pos].nome), stdin);
   contatos[*pos].nome[strcspn(contatos[*pos].nome, "\n")] = '\0';
-  
+
   printf("Sobrenome: ");
   fgets(contatos[*pos].sobrenome, 50, stdin);
   contatos[*pos].sobrenome[strcspn(contatos[*pos].sobrenome,"\n")] = '\0';
-  
+
   printf("Email: ");
   fgets(contatos[*pos].email, 50, stdin);
   contatos[*pos].email[strcspn(contatos[*pos].email, "\n")] = '\0';
-  
+
+  int validararroba = -1;
+  for (int i = 0; i < strlen(contatos[*pos].email); i++){
+    if(contatos[*pos].email[i] == '@'){
+      validararroba = i;
+      break;
+    }
+  }
+  int validarponto = -1;
+  if (validararroba != -1){
+     for (int i = validararroba + 1; i < strlen(contatos[*pos].email); i++){
+       if(contatos[*pos].email[i] == '.'){
+         validarponto = i;
+         break;
+       }
+     }
+  }
+  if (validararroba == -1 || validarponto == -1){
+    printf("Email inválido\n");
+    return EMAILINVALIDO;
+  }
+
   printf("Telefone: ");
   scanf("%ld", &contatos[*pos].telefone);
-  
   clearBuffer();
 
   *pos = *pos + 1;
@@ -116,5 +136,3 @@ void clearBuffer(){
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
-
-
