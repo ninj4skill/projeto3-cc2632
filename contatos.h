@@ -6,7 +6,7 @@ typedef struct{
   char email[50];
   long telefone;
 } Contato;
-typedef enum{SUCESSO, MAXCONTATOS, SEMCONTATOS, NAOENCONTRADO, ABRIR, FECHAR, ESCREVER, LER}erro;
+typedef enum{SUCESSO, MAXCONTATOS, SEMCONTATOS, EMAILINVALIDO, JACADASTRADO, NAOENCONTRADO, ABRIR, FECHAR, ESCREVER, LER}erro;
 typedef erro (*funcao)(Contato[], int*);
 
 erro Adicionar(Contato contatos[], int *pos);
