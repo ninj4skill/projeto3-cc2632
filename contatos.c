@@ -44,7 +44,7 @@ erro Adicionar(Contato contatos[], int *pos){
   scanf("%ld", &contatos[*pos].telefone);
   clearBuffer();
   
-   for (int i = 0; i < *pos; i++){
+  for (int i = 0; i < *pos; i++){
     if (contatos[*pos].telefone == contatos[i].telefone){
       printf("Telefone já cadastrado\n");
       return JACADASTRADO;
@@ -52,6 +52,74 @@ erro Adicionar(Contato contatos[], int *pos){
   }
 
   *pos = *pos + 1;
+  return SUCESSO;
+}
+
+erro Alterar(Contato contatos[], int *pos){
+  if(*pos == 0){
+    printf("Sem contatos para alterar\n");
+    return SEMCONTATOS;
+  }
+  long telefonealterar;
+  printf("Insira o telefone do contato que deseja alterar: ");
+  scanf("%ld", &telefonealterar);
+  int alterar = 0;
+  for (int i = 0; i < *pos; i++){
+    if (contatos[i].telefone == telefonealterar){
+      printf("Novo nome: ");
+      clearBuffer();
+      fgets(contatos[*pos].nome, sizeof(contatos[*pos].nome), stdin);
+      contatos[*pos].nome[strcspn(contatos[*pos].nome, "\n")] = '\0';
+      strcpy(contatos[i].nome, contatos[*pos].nome);
+
+      printf("Novo sobrenome: ");
+      fgets(contatos[*pos].sobrenome, 50, stdin);
+  contatos[*pos].sobrenome[strcspn(contatos[*pos].sobrenome,"\n")] = '\0';
+      strcpy(contatos[i].sobrenome, contatos[*pos].sobrenome);
+
+      printf("Novo email: ");
+      fgets(contatos[*pos].email, 50, stdin);
+      contatos[*pos].email[strcspn(contatos[*pos].email, "\n")] = '\0';
+
+      int validararroba = 0;
+      for (int i = 0; i < strlen(contatos[*pos].email); i++){
+        if(contatos[*pos].email[i] == '@'){
+          validararroba = i;
+          break;
+        }
+      }
+      int validarponto = 0;
+      if (validararroba != 0){
+         for (int i = validararroba + 1; i < strlen(contatos[*pos].email); i++){
+           if(contatos[*pos].email[i] == '.'){
+             validarponto = i;
+             break;
+           }
+         }
+      }
+      if (validararroba == 0 || validarponto == 0){
+        printf("Email inválido\n");
+        return EMAILINVALIDO;
+      }
+      strcpy(contatos[i].email, contatos[*pos].email);
+
+      printf("Novo telefone: ");
+      scanf("%ld", &contatos[*pos].telefone);
+      clearBuffer();
+      for (int j = 0; j < *pos; j++){
+        if (contatos[*pos].telefone == contatos[j].telefone){
+          printf("Telefone já cadastrado\n");
+          return JACADASTRADO;
+        }
+      }
+      contatos[i].telefone = contatos[*pos].telefone;
+      alterar = 1;
+    }
+  }
+  if (alterar == 0){
+    printf("Contato não encontrado\n");
+    return NAOENCONTRADO;
+  }
   return SUCESSO;
 }
 

@@ -10,6 +10,7 @@ typedef enum{SUCESSO, MAXCONTATOS, SEMCONTATOS, EMAILINVALIDO, JACADASTRADO, NAO
 typedef erro (*funcao)(Contato[], int*);
 
 erro Adicionar(Contato contatos[], int *pos);
+erro Alterar(Contato contatos[], int *pos);
 erro Deletar(Contato contatos[], int *pos);
 erro Listar(Contato contatos[], int *pos);
 erro Salvar(Contato contatos[], int *pos);
