@@ -43,6 +43,13 @@ erro Adicionar(Contato contatos[], int *pos){
   printf("Telefone: ");
   scanf("%ld", &contatos[*pos].telefone);
   clearBuffer();
+  
+   for (int i = 0; i < *pos; i++){
+    if (contatos[*pos].telefone == contatos[i].telefone){
+      printf("Telefone já cadastrado\n");
+      return JACADASTRADO;
+    }
+  }
 
   *pos = *pos + 1;
   return SUCESSO;
