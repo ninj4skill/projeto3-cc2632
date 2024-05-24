@@ -2,9 +2,11 @@
 #include "contatos.h"
 
 int main() {
-  funcao funcionalidades[] = {Adicionar, Deletar, Listar, Carregar, Salvar};
-  Contato contatos[total];
-  int pos;
+  funcao funcionalidades[] = {Adicionar, Alterar, Deletar, Listar, Carregarpessoal, Salvarpessoal, Carregartrabalho, Salvartrabalho};
+  Contato contatospessoal[totalpessoal];
+  Contato contatostrabalho[totaltrabalho];
+  int pospessoal;
+  int postrabalho;
   int opcao;
 
   do{
@@ -21,8 +23,16 @@ int main() {
     if(opcao > 6){
       printf("Opção inválida\n");
     }
-    else if (opcao > 0){
-      funcionalidades[opcao - 1](contatos, &pos);
+    else if (opcao > 0 && opcao < 5){
+      funcionalidades[opcao - 1](contatostrabalho, contatospessoal, &pospessoal, &postrabalho);
+    }
+    else if (opcao == 5){
+      funcionalidades[4](contatostrabalho, contatospessoal, &pospessoal, &postrabalho);
+      funcionalidades[6](contatostrabalho, contatospessoal, &pospessoal, &postrabalho);
+    }
+    else if (opcao == 6){
+      funcionalidades[5](contatostrabalho, contatospessoal, &pospessoal, &postrabalho);
+      funcionalidades[7](contatostrabalho, contatospessoal, &pospessoal, &postrabalho);
     }
     else {
       printf("Saindo...\n");
